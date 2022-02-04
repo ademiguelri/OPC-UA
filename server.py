@@ -2,27 +2,28 @@ from opcua import Server
 from random import randint
 import datetime
 import time
+import config
 
 server = Server()
 
-url = "opc.tcp://192.168.0.8:4840"
-server.set_endpoint(url)
+server.set_endpoint(config.URL)
 
 name = "OPCUA_SIMULATION_SERVER"
-addspace = server.register_namespace(name)
+#addspace = server.register_namespace(name)
+id = 'ns=2;s="V1"'
 
 node =  server.get_objects_node()
 
-Param = node.add_object(addspace, "Parameters")
+Param = node.add_object(id, "Parameters")
 
-Temp = Param.add_variable(addspace, "Temperature", 0)
-Time = Param.add_variable(addspace, "Time", 0)
+Temp = Param.add_variable('ns=2;s="V1_Te"', "Temperature", 0)
+Time = Param.add_variable('ns=2;s="V1_Ti"', "Time", 0)
 
 Temp.set_writable()
 Time.set_writable()
 
 server.start()
-print("Server started at {}".format(url))
+print("Server started at {}".format(config.URL))
 
 while True:
     Temperature = randint(10,50)
