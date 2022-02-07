@@ -2,7 +2,7 @@ from opcua import Client
 import time
 import config
 
-client = Client(config.URL)
+client = Client(config.URL1)
 
 client.connect()
 print("Client connected")
